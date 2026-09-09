@@ -1,12 +1,90 @@
 ﻿<Window x:Class="GestorIAAS.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GestorIAAS"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Gestor IAAS"
+        Height="600"
+        Width="900">
+    <TabControl>
+        <TabItem Header="Catálogos">
+            <Grid Margin="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-    </Grid>
+                <!-- Columna izquierda: Tipos de IAAS -->
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Tipos de IAAS"
+                            FontWeight="Bold"
+                            FontSize="16"
+                            Margin="0,0,0,10"/>
+
+                    <ListBox x:Name="ListaTiposIAAS"
+                            Height="350"
+                            DisplayMemberPath="Nombre"/>
+                    <Button Content="Eliminar seleccionado"
+                            Click="BtnEliminarTipoIAAS_Click"
+                            Margin="0,5,0,0"
+                            Padding="5"/>
+
+                    <TextBlock Text="Nombre:"
+                            Margin="0,15,0,0"/>
+                    <TextBox x:Name="TxtNuevoTipoIAAS"
+                            Margin="0,5"/>
+
+                    <CheckBox x:Name="ChkNotificaMinsal"
+                            Content="Se notifica al MINSAL"
+                            Margin="0,5"/>
+
+                    <Button Content="Agregar Tipo IAAS"
+                            Click="BtnAgregarTipoIAAS_Click"
+                            Margin="0,10,0,0"
+                            Padding="5"/>
+                </StackPanel>
+
+                <!-- Columna derecha: Servicios Clínicos -->
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Servicios Clínicos"
+                            FontWeight="Bold"
+                            FontSize="16"
+                            Margin="0,0,0,10"/>
+
+                    <ListBox x:Name="ListaServicios"
+                            Height="350"
+                            DisplayMemberPath="Nombre"/>
+                    <Button Content="Eliminar seleccionado"
+                            Click="BtnEliminarServicio_Click"
+                            Margin="0,5,0,0"
+                            Padding="5"/>
+
+                    <TextBlock Text="Nombre:"
+                            Margin="0,15,0,0"/>
+                    <TextBox x:Name="TxtNuevoServicio"
+                            Margin="0,5"/>
+
+                    <CheckBox x:Name="ChkEsEspecialidad"
+                            Content="Es especialidad (no servicio de hospitalización)"
+                            Margin="0,5"/>
+
+                    <Button Content="Agregar Servicio"
+                            Click="BtnAgregarServicio_Click"
+                            Margin="0,10,0,0"
+                            Padding="5"/>
+                </StackPanel>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Ingreso Manual">
+            <TextBlock Text="Aquí va el formulario de ingreso"
+                    Margin="20"/>
+        </TabItem>
+        <TabItem Header="Listado / Filtro">
+            <TextBlock Text="Aquí va la tabla filtrable"
+                    Margin="20"/>
+        </TabItem>
+        <TabItem Header="Importar / Exportar">
+            <TextBlock Text="Aquí va el importador de Excel"
+                    Margin="20"/>
+        </TabItem>
+    </TabControl>
 </Window>

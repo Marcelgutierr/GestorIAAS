@@ -480,3 +480,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Base de datos con datos sensibles - NUNCA subir
+*.db
+*.db-shm
+*.db-wal
