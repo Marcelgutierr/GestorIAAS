@@ -16,26 +16,26 @@
                 <!-- Columna izquierda: Tipos de IAAS -->
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="Tipos de IAAS"
-                            FontWeight="Bold"
-                            FontSize="16"
-                            Margin="0,0,0,10"/>
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Margin="0,0,0,10"/>
 
                     <ListBox x:Name="ListaTiposIAAS"
-                            Height="350"
-                            DisplayMemberPath="Nombre"/>
+                             Height="350"
+                             DisplayMemberPath="Nombre"/>
                     <Button Content="Eliminar seleccionado"
                             Click="BtnEliminarTipoIAAS_Click"
                             Margin="0,5,0,0"
                             Padding="5"/>
 
                     <TextBlock Text="Nombre:"
-                            Margin="0,15,0,0"/>
+                               Margin="0,15,0,0"/>
                     <TextBox x:Name="TxtNuevoTipoIAAS"
-                            Margin="0,5"/>
+                             Margin="0,5"/>
 
                     <CheckBox x:Name="ChkNotificaMinsal"
-                            Content="Se notifica al MINSAL"
-                            Margin="0,5"/>
+                              Content="Se notifica al MINSAL"
+                              Margin="0,5"/>
 
                     <Button Content="Agregar Tipo IAAS"
                             Click="BtnAgregarTipoIAAS_Click"
@@ -46,26 +46,26 @@
                 <!-- Columna derecha: Servicios Clínicos -->
                 <StackPanel Grid.Column="2">
                     <TextBlock Text="Servicios Clínicos"
-                            FontWeight="Bold"
-                            FontSize="16"
-                            Margin="0,0,0,10"/>
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Margin="0,0,0,10"/>
 
                     <ListBox x:Name="ListaServicios"
-                            Height="350"
-                            DisplayMemberPath="Nombre"/>
+                             Height="350"
+                             DisplayMemberPath="Nombre"/>
                     <Button Content="Eliminar seleccionado"
                             Click="BtnEliminarServicio_Click"
                             Margin="0,5,0,0"
                             Padding="5"/>
 
                     <TextBlock Text="Nombre:"
-                            Margin="0,15,0,0"/>
+                               Margin="0,15,0,0"/>
                     <TextBox x:Name="TxtNuevoServicio"
-                            Margin="0,5"/>
+                             Margin="0,5"/>
 
                     <CheckBox x:Name="ChkEsEspecialidad"
-                            Content="Es especialidad (no servicio de hospitalización)"
-                            Margin="0,5"/>
+                              Content="Es especialidad (no servicio de hospitalización)"
+                              Margin="0,5"/>
 
                     <Button Content="Agregar Servicio"
                             Click="BtnAgregarServicio_Click"
@@ -75,16 +75,73 @@
             </Grid>
         </TabItem>
         <TabItem Header="Ingreso Manual">
-            <TextBlock Text="Aquí va el formulario de ingreso"
-                    Margin="20"/>
+            <StackPanel Margin="15"
+                    Width="400"
+                    HorizontalAlignment="Left">
+
+                <TextBlock Text="Mes:"/>
+                <ComboBox x:Name="CmbMes"
+                        Margin="0,5,0,10">
+                    <ComboBoxItem Content="Enero"/>
+                    <ComboBoxItem Content="Febrero"/>
+                    <ComboBoxItem Content="Marzo"/>
+                    <ComboBoxItem Content="Abril"/>
+                    <ComboBoxItem Content="Mayo"/>
+                    <ComboBoxItem Content="Junio"/>
+                    <ComboBoxItem Content="Julio"/>
+                    <ComboBoxItem Content="Agosto"/>
+                    <ComboBoxItem Content="Septiembre"/>
+                    <ComboBoxItem Content="Octubre"/>
+                    <ComboBoxItem Content="Noviembre"/>
+                    <ComboBoxItem Content="Diciembre"/>
+                </ComboBox>
+
+                <TextBlock Text="Año:"/>
+                <TextBox x:Name="TxtAnio"
+                        Margin="0,5,0,10"/>
+
+                <TextBlock Text="Rut:"/>
+                <TextBox x:Name="TxtRut"
+                        Margin="0,5,0,10"/>
+
+                <TextBlock Text="Tipo de IAAS:"/>
+                <ComboBox x:Name="CmbTipoIAAS"
+                        IsEditable="True"
+                        DisplayMemberPath="Nombre"
+                        Margin="0,5,0,10"/>
+
+                <TextBlock Text="Microorganismo:"/>
+                <TextBox x:Name="TxtMicroorganismo"
+                        Margin="0,5,0,10"/>
+
+                <TextBlock Text="Observación:"/>
+                <TextBox x:Name="TxtObservacion"
+                        Margin="0,5,0,10"
+                        Height="60"
+                        TextWrapping="Wrap"
+                        AcceptsReturn="True"/>
+
+                <TextBlock Text="Servicio(s) Clínico(s) (Ctrl+clic para elegir varios):"/>
+                <ListBox x:Name="ListaServiciosSeleccion"
+                        SelectionMode="Extended"
+                        Height="150"
+                        DisplayMemberPath="Nombre"
+                        Margin="0,5,0,10"/>
+
+                <Button Content="Guardar Registro"
+                        Click="BtnGuardarRegistro_Click"
+                        Padding="8"
+                        Margin="0,10,0,0"/>
+
+            </StackPanel>
         </TabItem>
         <TabItem Header="Listado / Filtro">
             <TextBlock Text="Aquí va la tabla filtrable"
-                    Margin="20"/>
+                       Margin="20"/>
         </TabItem>
         <TabItem Header="Importar / Exportar">
             <TextBlock Text="Aquí va el importador de Excel"
-                    Margin="20"/>
+                       Margin="20"/>
         </TabItem>
     </TabControl>
 </Window>
