@@ -3,6 +3,7 @@ using GestorIAAS.Data;
 using GestorIAAS.Models;
 using System.Windows.Controls;
 using GestorIAAS.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestorIAAS
 {
@@ -17,6 +18,7 @@ namespace GestorIAAS
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             CargarCatalogos();
+            CargarRegistros();
         }
 
         private void CargarCatalogos()
@@ -31,6 +33,7 @@ namespace GestorIAAS
 
             CmbTipoIAAS.ItemsSource = tipos;
             ListaServiciosSeleccion.ItemsSource = servicios;
+            CmbFiltroServicio.ItemsSource = servicios;
         }
 
         private void BtnAgregarTipoIAAS_Click(object sender, RoutedEventArgs e)
@@ -202,6 +205,41 @@ namespace GestorIAAS
             ListaServiciosSeleccion.SelectedItems.Clear();
 
             CargarCatalogos(); // por si se creó un Tipo de IAAS nuevo
+            CargarRegistros();
+        }
+
+        private void CargarRegistros(int? servicioClinicoId = null)
+        {
+            using var db = new AppDbContext();
+
+            var query = db.RegistrosIAAS
+                .Include(r => r.TipoIAAS)
+                .Include(r => r.ServiciosClinicos)
+                .AsQueryable();
+
+            if (servicioClinicoId.HasValue)
+            {
+                query = query.Where(r => r.ServiciosClinicos.Any(s => s.Id == servicioClinicoId.Value));
+            }
+
+            GridRegistros.ItemsSource = query
+                .OrderByDescending(r => r.Anio)
+                .ThenByDescending(r => r.Id)
+                .ToList();
+        }
+
+        private void CmbFiltroServicio_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CmbFiltroServicio.SelectedItem is ServicioClinico servicioSeleccionado)
+            {
+                CargarRegistros(servicioSeleccionado.Id);
+            }
+        }
+
+        private void BtnQuitarFiltro_Click(object sender, RoutedEventArgs e)
+        {
+            CmbFiltroServicio.SelectedItem = null;
+            CargarRegistros();
         }
     }
 }

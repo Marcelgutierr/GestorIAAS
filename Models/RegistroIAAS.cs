@@ -14,5 +14,7 @@ namespace GestorIAAS.Models
         public TipoIAAS? TipoIAAS { get; set; }
 
         public List<ServicioClinico> ServiciosClinicos { get; set; } = new();
+
+        public string ServiciosTexto => string.Join(", ", ServiciosClinicos.Select(s => s.Nombre));
     }
 }

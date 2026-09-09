@@ -76,12 +76,12 @@
         </TabItem>
         <TabItem Header="Ingreso Manual">
             <StackPanel Margin="15"
-                    Width="400"
-                    HorizontalAlignment="Left">
+                        Width="400"
+                        HorizontalAlignment="Left">
 
                 <TextBlock Text="Mes:"/>
                 <ComboBox x:Name="CmbMes"
-                        Margin="0,5,0,10">
+                          Margin="0,5,0,10">
                     <ComboBoxItem Content="Enero"/>
                     <ComboBoxItem Content="Febrero"/>
                     <ComboBoxItem Content="Marzo"/>
@@ -98,35 +98,35 @@
 
                 <TextBlock Text="Año:"/>
                 <TextBox x:Name="TxtAnio"
-                        Margin="0,5,0,10"/>
+                         Margin="0,5,0,10"/>
 
                 <TextBlock Text="Rut:"/>
                 <TextBox x:Name="TxtRut"
-                        Margin="0,5,0,10"/>
+                         Margin="0,5,0,10"/>
 
                 <TextBlock Text="Tipo de IAAS:"/>
                 <ComboBox x:Name="CmbTipoIAAS"
-                        IsEditable="True"
-                        DisplayMemberPath="Nombre"
-                        Margin="0,5,0,10"/>
+                          IsEditable="True"
+                          DisplayMemberPath="Nombre"
+                          Margin="0,5,0,10"/>
 
                 <TextBlock Text="Microorganismo:"/>
                 <TextBox x:Name="TxtMicroorganismo"
-                        Margin="0,5,0,10"/>
+                         Margin="0,5,0,10"/>
 
                 <TextBlock Text="Observación:"/>
                 <TextBox x:Name="TxtObservacion"
-                        Margin="0,5,0,10"
-                        Height="60"
-                        TextWrapping="Wrap"
-                        AcceptsReturn="True"/>
+                         Margin="0,5,0,10"
+                         Height="60"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"/>
 
                 <TextBlock Text="Servicio(s) Clínico(s) (Ctrl+clic para elegir varios):"/>
                 <ListBox x:Name="ListaServiciosSeleccion"
-                        SelectionMode="Extended"
-                        Height="150"
-                        DisplayMemberPath="Nombre"
-                        Margin="0,5,0,10"/>
+                         SelectionMode="Extended"
+                         Height="150"
+                         DisplayMemberPath="Nombre"
+                         Margin="0,5,0,10"/>
 
                 <Button Content="Guardar Registro"
                         Click="BtnGuardarRegistro_Click"
@@ -136,8 +136,53 @@
             </StackPanel>
         </TabItem>
         <TabItem Header="Listado / Filtro">
-            <TextBlock Text="Aquí va la tabla filtrable"
-                       Margin="20"/>
+            <DockPanel Margin="15">
+
+                <StackPanel DockPanel.Dock="Top"
+                        Orientation="Horizontal"
+                        Margin="0,0,0,10">
+                    <TextBlock Text="Filtrar por Servicio Clínico:"
+                            VerticalAlignment="Center"
+                            Margin="0,0,10,0"/>
+                    <ComboBox x:Name="CmbFiltroServicio"
+                            Width="200"
+                            DisplayMemberPath="Nombre"
+                              SelectionChanged="CmbFiltroServicio_SelectionChanged"/>
+                    <Button Content="Quitar filtro"
+                            Click="BtnQuitarFiltro_Click"
+                            Margin="10,0,0,0"
+                            Padding="5,2"/>
+                </StackPanel>
+
+                <DataGrid x:Name="GridRegistros"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mes"
+                                Binding="{Binding Mes}"
+                                Width="90"/>
+                        <DataGridTextColumn Header="Año"
+                                Binding="{Binding Anio}"
+                                Width="60"/>
+                        <DataGridTextColumn Header="Rut"
+                                Binding="{Binding Rut}"
+                                Width="110"/>
+                        <DataGridTextColumn Header="IAAS"
+                                Binding="{Binding TipoIAAS.Nombre}"
+                                Width="200"/>
+                        <DataGridTextColumn Header="Microorganismo"
+                                Binding="{Binding Microorganismo}"
+                                Width="180"/>
+                        <DataGridTextColumn Header="Servicios"
+                                Binding="{Binding ServiciosTexto}"
+                                Width="180"/>
+                        <DataGridTextColumn Header="Observación"
+                                Binding="{Binding Observacion}"
+                                Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </DockPanel>
         </TabItem>
         <TabItem Header="Importar / Exportar">
             <TextBlock Text="Aquí va el importador de Excel"
