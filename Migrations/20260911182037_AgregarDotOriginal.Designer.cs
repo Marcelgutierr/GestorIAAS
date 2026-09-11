@@ -2,6 +2,7 @@
 using GestorIAAS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestorIAAS.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260911182037_AgregarDotOriginal")]
+    partial class AgregarDotOriginal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
@@ -28,9 +31,6 @@ namespace GestorIAAS.Migrations
                     b.Property<int?>("DotOriginal")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("EsBrote")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Mes")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -38,9 +38,6 @@ namespace GestorIAAS.Migrations
                     b.Property<string>("Microorganismo")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("NotificaMinsal")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("NumeroIAAS")
                         .HasColumnType("INTEGER");
@@ -58,9 +55,6 @@ namespace GestorIAAS.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("TipoIAASId");
-
-                    b.HasIndex("Anio", "DotOriginal")
-                        .IsUnique();
 
                     b.ToTable("RegistrosIAAS");
                 });

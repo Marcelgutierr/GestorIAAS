@@ -15,6 +15,12 @@ namespace GestorIAAS.Models
 
         public List<ServicioClinico> ServiciosClinicos { get; set; } = new();
 
+        public int? DotOriginal { get; set; }
+
+        public bool EsBrote { get; set; }
+
+        public bool NotificaMinsal { get; set; }
+
         public string ServiciosTexto => string.Join(", ", ServiciosClinicos.Select(s => s.Nombre));
     }
 }

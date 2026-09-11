@@ -7,5 +7,7 @@ namespace GestorIAAS.Models
         public bool NotificaMinsal { get; set; }
 
         public List<RegistroIAAS> Registros { get; set; } = new();
+
+        public string NombreMostrado => NotificaMinsal ? $"{Nombre} (Se notifica)" : Nombre;
     }
 }

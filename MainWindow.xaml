@@ -1,10 +1,264 @@
 ﻿<Window x:Class="GestorIAAS.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         Title="Gestor IAAS"
         Height="600"
         Width="900">
     <TabControl>
+
+        <TabItem Header="Ingreso Manual">
+            <StackPanel Margin="15"
+                        Width="400"
+                        HorizontalAlignment="Left">
+
+                <TextBlock Text="Mes:"/>
+                <ComboBox x:Name="CmbMes"
+                          Margin="0,5,0,10">
+                    <ComboBoxItem Content="Enero"/>
+                    <ComboBoxItem Content="Febrero"/>
+                    <ComboBoxItem Content="Marzo"/>
+                    <ComboBoxItem Content="Abril"/>
+                    <ComboBoxItem Content="Mayo"/>
+                    <ComboBoxItem Content="Junio"/>
+                    <ComboBoxItem Content="Julio"/>
+                    <ComboBoxItem Content="Agosto"/>
+                    <ComboBoxItem Content="Septiembre"/>
+                    <ComboBoxItem Content="Octubre"/>
+                    <ComboBoxItem Content="Noviembre"/>
+                    <ComboBoxItem Content="Diciembre"/>
+                </ComboBox>
+
+                <TextBlock Text="Año:"/>
+                <TextBox x:Name="TxtAnio"
+                         Margin="0,5,0,10"/>
+
+                <TextBlock Text="Rut:"/>
+                <TextBox x:Name="TxtRut"
+                         Margin="0,5,0,10"/>
+
+                <TextBlock Text="Tipo de IAAS:"/>
+                <ComboBox x:Name="CmbTipoIAAS"
+                          IsEditable="True"
+                          DisplayMemberPath="NombreMostrado"
+                          Margin="0,5,0,10"
+                          SelectionChanged="CmbTipoIAAS_SelectionChanged"/>
+                <CheckBox x:Name="ChkEsBrote"
+                          Content="Es brote"
+                          Margin="0,0,0,10"
+                          Checked="ChkEsBrote_CheckedChanged"
+                          Unchecked="ChkEsBrote_CheckedChanged"/>
+                <CheckBox x:Name="ChkNotificaMinsal2"
+                          Content="Se notifica a MINSAL"
+                          Margin="0,0,0,10"/>
+
+                <TextBlock Text="Microorganismo:"/>
+                <TextBox x:Name="TxtMicroorganismo"
+                         Margin="0,5,0,10"/>
+
+                <TextBlock Text="Observación:"/>
+                <TextBox x:Name="TxtObservacion"
+                         Margin="0,5,0,10"
+                         Height="60"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"/>
+
+                <TextBlock Text="Servicio(s) Clínico(s) (Ctrl+clic para elegir varios):"/>
+                <ListBox x:Name="ListaServiciosSeleccion"
+                         SelectionMode="Extended"
+                         Height="150"
+                         DisplayMemberPath="Nombre"
+                         Margin="0,5,0,10"/>
+
+                <Button Content="Guardar Registro"
+                        Click="BtnGuardarRegistro_Click"
+                        Padding="8"
+                        Margin="0,10,0,0"/>
+
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Listado / Filtro">
+            <DockPanel Margin="15">
+
+                <StackPanel DockPanel.Dock="Top"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10">
+                    <TextBlock Text="Año:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0"/>
+                    <ComboBox x:Name="CmbFiltroAnio"
+                              Width="80"
+                              Margin="0,0,15,0"
+                              SelectionChanged="Filtro_Changed"/>
+
+                    <TextBlock Text="Servicio Clínico:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0"/>
+                    <ComboBox x:Name="CmbFiltroServicio"
+                              Width="180"
+                              DisplayMemberPath="Nombre"
+                              Margin="0,0,15,0"
+                              SelectionChanged="Filtro_Changed"/>
+
+                    <CheckBox x:Name="ChkFiltroBrote"
+                              Content="Solo brotes"
+                              VerticalAlignment="Center"
+                              Margin="0,0,15,0"
+                              Checked="Filtro_Changed"
+                              Unchecked="Filtro_Changed"/>
+
+                    <CheckBox x:Name="ChkFiltroMinsal"
+                              Content="Solo notificados a MINSAL"
+                              VerticalAlignment="Center"
+                              Margin="0,0,15,0"
+                              Checked="Filtro_Changed"
+                              Unchecked="Filtro_Changed"/>
+
+                    <Button Content="Quitar filtros"
+                            Click="BtnQuitarFiltro_Click"
+                            Padding="5,2"/>
+                </StackPanel>
+
+                <TextBlock x:Name="TxtTotalRegistros"
+                           DockPanel.Dock="Bottom"
+                           Margin="0,10,0,0"
+                           FontWeight="Bold"/>
+
+                <DataGrid x:Name="GridRegistros"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Mes"
+                                            Binding="{Binding Mes}"
+                                            Width="90"/>
+                        <DataGridTextColumn Header="Año"
+                                            Binding="{Binding Anio}"
+                                            Width="60"/>
+                        <DataGridTextColumn Header="Rut"
+                                            Binding="{Binding Rut}"
+                                            Width="110"/>
+                        <DataGridTextColumn Header="IAAS"
+                                            Binding="{Binding TipoIAAS.Nombre}"
+                                            Width="200"/>
+                        <DataGridCheckBoxColumn Header="Brote"
+                                                Binding="{Binding EsBrote}"
+                                                Width="60"/>
+                        <DataGridCheckBoxColumn Header="Minsal"
+                                                Binding="{Binding NotificaMinsal}"
+                                                Width="60"/>
+                        <DataGridTextColumn Header="Microorganismo"
+                                            Binding="{Binding Microorganismo}"
+                                            Width="180"/>
+                        <DataGridTextColumn Header="Servicios"
+                                            Binding="{Binding ServiciosTexto}"
+                                            Width="180"/>
+                        <DataGridTextColumn Header="Observación"
+                                            Binding="{Binding Observacion}"
+                                            Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Gráficos">
+            <DockPanel Margin="15">
+
+                <StackPanel DockPanel.Dock="Top"
+                            Orientation="Horizontal"
+                            Margin="0,0,0,10">
+                    <TextBlock Text="Vista:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0"/>
+                    <ComboBox x:Name="CmbVistaGrafico"
+                              Width="160"
+                              Margin="0,0,15,0"
+                              SelectionChanged="ActualizarGrafico">
+                        <ComboBoxItem Content="Por Servicio Clínico"
+                                      IsSelected="True"/>
+                        <ComboBoxItem Content="Por Mes"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Tipo:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0"/>
+                    <ComboBox x:Name="CmbTipoGrafico"
+                              Width="100"
+                              Margin="0,0,15,0"
+                              SelectionChanged="ActualizarGrafico">
+                        <ComboBoxItem Content="Barras"
+                                      IsSelected="True"/>
+                        <ComboBoxItem Content="Línea"/>
+                        <ComboBoxItem Content="Torta"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Año:"
+                               VerticalAlignment="Center"
+                               Margin="0,0,5,0"/>
+                    <ComboBox x:Name="CmbGraficoAnio"
+                              Width="80"
+                              Margin="0,0,15,0"
+                              SelectionChanged="ActualizarGrafico"/>
+
+                    <Button Content="Descargar como PNG"
+                            Click="BtnDescargarGrafico_Click"
+                            Padding="8,4"/>
+                </StackPanel>
+
+                <Border x:Name="ContenedorGrafico"
+                        Background="White">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Disabled">
+                        <Grid x:Name="GrupoGraficos"
+                                Background="White">
+                            <lvc:CartesianChart x:Name="GraficoCartesiano"
+                                    Height="400"/>
+                            <lvc:PieChart x:Name="GraficoTorta"
+                                    Height="400"
+                                    Visibility="Collapsed"/>
+                        </Grid>
+                    </ScrollViewer>
+                </Border>
+
+            </DockPanel>
+        </TabItem>
+        <TabItem Header="Importar / Exportar">
+            <StackPanel Margin="15"
+                        Width="450"
+                        HorizontalAlignment="Left">
+
+                <TextBlock Text="Importar Excel"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="Año de los registros de este archivo:"/>
+                <TextBox x:Name="TxtAnioImportacion"
+                         Margin="0,5,0,10"
+                         Width="100"
+                         HorizontalAlignment="Left"/>
+
+                <Button Content="Seleccionar archivo Excel e Importar"
+                        Click="BtnImportarExcel_Click"
+                        Padding="8"
+                        HorizontalAlignment="Left"/>
+
+                <TextBlock x:Name="TxtResultadoImportacion"
+                           Margin="0,10,0,0"
+                           TextWrapping="Wrap"/>
+
+                <Separator Margin="0,20"/>
+
+                <TextBlock Text="Exportar Excel"
+                           FontWeight="Bold"
+                           FontSize="16"
+                           Margin="0,0,0,10"/>
+                <Button Content="Exportar todos los registros a Excel"
+                        Click="BtnExportarExcel_Click"
+                        Padding="8"
+                        HorizontalAlignment="Left"/>
+
+            </StackPanel>
+        </TabItem>
         <TabItem Header="Catálogos">
             <Grid Margin="15">
                 <Grid.ColumnDefinitions>
@@ -22,7 +276,7 @@
 
                     <ListBox x:Name="ListaTiposIAAS"
                              Height="350"
-                             DisplayMemberPath="Nombre"/>
+                             DisplayMemberPath="NombreMostrado"/>
                     <Button Content="Eliminar seleccionado"
                             Click="BtnEliminarTipoIAAS_Click"
                             Margin="0,5,0,0"
@@ -73,120 +327,6 @@
                             Padding="5"/>
                 </StackPanel>
             </Grid>
-        </TabItem>
-        <TabItem Header="Ingreso Manual">
-            <StackPanel Margin="15"
-                        Width="400"
-                        HorizontalAlignment="Left">
-
-                <TextBlock Text="Mes:"/>
-                <ComboBox x:Name="CmbMes"
-                          Margin="0,5,0,10">
-                    <ComboBoxItem Content="Enero"/>
-                    <ComboBoxItem Content="Febrero"/>
-                    <ComboBoxItem Content="Marzo"/>
-                    <ComboBoxItem Content="Abril"/>
-                    <ComboBoxItem Content="Mayo"/>
-                    <ComboBoxItem Content="Junio"/>
-                    <ComboBoxItem Content="Julio"/>
-                    <ComboBoxItem Content="Agosto"/>
-                    <ComboBoxItem Content="Septiembre"/>
-                    <ComboBoxItem Content="Octubre"/>
-                    <ComboBoxItem Content="Noviembre"/>
-                    <ComboBoxItem Content="Diciembre"/>
-                </ComboBox>
-
-                <TextBlock Text="Año:"/>
-                <TextBox x:Name="TxtAnio"
-                         Margin="0,5,0,10"/>
-
-                <TextBlock Text="Rut:"/>
-                <TextBox x:Name="TxtRut"
-                         Margin="0,5,0,10"/>
-
-                <TextBlock Text="Tipo de IAAS:"/>
-                <ComboBox x:Name="CmbTipoIAAS"
-                          IsEditable="True"
-                          DisplayMemberPath="Nombre"
-                          Margin="0,5,0,10"/>
-
-                <TextBlock Text="Microorganismo:"/>
-                <TextBox x:Name="TxtMicroorganismo"
-                         Margin="0,5,0,10"/>
-
-                <TextBlock Text="Observación:"/>
-                <TextBox x:Name="TxtObservacion"
-                         Margin="0,5,0,10"
-                         Height="60"
-                         TextWrapping="Wrap"
-                         AcceptsReturn="True"/>
-
-                <TextBlock Text="Servicio(s) Clínico(s) (Ctrl+clic para elegir varios):"/>
-                <ListBox x:Name="ListaServiciosSeleccion"
-                         SelectionMode="Extended"
-                         Height="150"
-                         DisplayMemberPath="Nombre"
-                         Margin="0,5,0,10"/>
-
-                <Button Content="Guardar Registro"
-                        Click="BtnGuardarRegistro_Click"
-                        Padding="8"
-                        Margin="0,10,0,0"/>
-
-            </StackPanel>
-        </TabItem>
-        <TabItem Header="Listado / Filtro">
-            <DockPanel Margin="15">
-
-                <StackPanel DockPanel.Dock="Top"
-                        Orientation="Horizontal"
-                        Margin="0,0,0,10">
-                    <TextBlock Text="Filtrar por Servicio Clínico:"
-                            VerticalAlignment="Center"
-                            Margin="0,0,10,0"/>
-                    <ComboBox x:Name="CmbFiltroServicio"
-                            Width="200"
-                            DisplayMemberPath="Nombre"
-                              SelectionChanged="CmbFiltroServicio_SelectionChanged"/>
-                    <Button Content="Quitar filtro"
-                            Click="BtnQuitarFiltro_Click"
-                            Margin="10,0,0,0"
-                            Padding="5,2"/>
-                </StackPanel>
-
-                <DataGrid x:Name="GridRegistros"
-                        AutoGenerateColumns="False"
-                        IsReadOnly="True">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mes"
-                                Binding="{Binding Mes}"
-                                Width="90"/>
-                        <DataGridTextColumn Header="Año"
-                                Binding="{Binding Anio}"
-                                Width="60"/>
-                        <DataGridTextColumn Header="Rut"
-                                Binding="{Binding Rut}"
-                                Width="110"/>
-                        <DataGridTextColumn Header="IAAS"
-                                Binding="{Binding TipoIAAS.Nombre}"
-                                Width="200"/>
-                        <DataGridTextColumn Header="Microorganismo"
-                                Binding="{Binding Microorganismo}"
-                                Width="180"/>
-                        <DataGridTextColumn Header="Servicios"
-                                Binding="{Binding ServiciosTexto}"
-                                Width="180"/>
-                        <DataGridTextColumn Header="Observación"
-                                Binding="{Binding Observacion}"
-                                Width="*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-
-            </DockPanel>
-        </TabItem>
-        <TabItem Header="Importar / Exportar">
-            <TextBlock Text="Aquí va el importador de Excel"
-                       Margin="20"/>
         </TabItem>
     </TabControl>
 </Window>

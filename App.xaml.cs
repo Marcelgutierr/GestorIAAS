@@ -1,13 +1,18 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
 
-namespace GestorIAAS;
-
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
-public partial class App : Application
+namespace GestorIAAS
 {
-}
+    public partial class App : Application
+    {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
 
+            this.DispatcherUnhandledException += (s, ex) =>
+            {
+                MessageBox.Show(ex.Exception.ToString(), "Error no controlado");
+                ex.Handled = true;
+            };
+        }
+    }
+}

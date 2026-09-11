@@ -13,5 +13,12 @@ namespace GestorIAAS.Data
         {
             optionsBuilder.UseSqlite("Data Source=iaas.db");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RegistroIAAS>()
+                .HasIndex(r => new { r.Anio, r.DotOriginal })
+                .IsUnique();
+        }
     }
 }
